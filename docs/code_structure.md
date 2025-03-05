@@ -15,6 +15,7 @@ There are four of them:
 * `THNN`. The neural network ops on CPU.
 * `THCUNN`. The CUDA version of `THNN`.
 
+You can see some `*.cu` and `*.cuh` files under `THC` and `THCUNN`.
 These are later turned into the `ATen` library.
 
 ## Core classes
@@ -35,10 +36,26 @@ The code lives under `torch/autograd`.
 
 It also implemented an SGD optimizer under `torch/optim`.
 
-## Build system
+## Python/C++ interfacing
 
 The project relies on `setup.py` to build everything including both Python and C++ code.
-In `setup.py`, it uses `setuptools.Extension` to define all the C++ extension modules.
+It has a series of custom build classes to build the project, like `build_deps`, `build_ext`.
+They will be executed during running `python setup.py build`,
+the entry of which is `class build(...):`, which subsequently call the `build_deps`, and `build_ext` as its subcommands.
+
+The `build_deps` builds the ops libraries (`TH`, `THC`, `THNN`, `THCUNN`) into
+shared objects (`*.so`) to be linked by the python modules, so that these C++ libraries are callable from Python. It
+uses custom build command to call `torch/lib/build_all.sh` to build the binary
+files (`*.so`).
+
+Then, it calls `tools.nnwrap.generate_wrappers()` to generate the python wrapper modules from custom format source files, `*.cwrap`.
+In a `*.cwrap` file, `` for example, ...
+
+```shell
+more to be inserted in here.
+```
+
+Then, it uses `setuptools.Extension` to define all the C++ extension modules and pass them to the `setup()` function.
 For example:
 
 ```py
@@ -50,13 +67,10 @@ THNN = Extension("torch._thnn._THNN",
 )
 ```
 
+Similarly, it uses `build_ext` to the tensor methods implemented in C++ into a shared object (`*.so`) callable from Python.
+The `tools.cwrap.cwrap()` to convert `'torch/csrc/generic/TensorMethods.cwrap'` into `'torch/csrc/generic/TensorMethods.cpp'`.
+
 All of the extension modules are written in C++/CUDA. No plain C code are found.
-
-For the ops libraries (`TH`, `THC`, `THNN`, `THCUNN`), it uses custom build command to call `torch/lib/build_all.sh`.
-
-## Generated code
-
-There are also a lot of generated code files.
 
 
 ## Questions
