@@ -1,8 +1,12 @@
 # PyTorch Source
 
-
 This repo is a fork of the PyTorch v0.1.1 release.
 We try to read the code and understand the basics of PyTorch internal mechanisms.
+
+Here are the this this repo added
+* Build and install instructions.
+* Explanation of the source code. (under `docs/`).
+* Changed the `.travis.yml` CI into the GitHub Actions.
 
 ## Build and install
 
