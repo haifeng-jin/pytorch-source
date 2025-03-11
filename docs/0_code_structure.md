@@ -16,6 +16,7 @@ There are four of them:
 * `THCUNN`. The CUDA version of `THNN`.
 
 You can see some `*.cu` and `*.cuh` files under `THC` and `THCUNN`.
+These libraries are implemented in a C language style.
 These are later turned into the `ATen` library.
 
 ## Core classes
@@ -95,3 +96,13 @@ Similarly, it uses `build_ext` to build the tensor methods implemented in C++ in
 The `tools.cwrap.cwrap()` to convert `'torch/csrc/generic/TensorMethods.cwrap'` into `'torch/csrc/generic/TensorMethods.cpp'`.
 
 All of the extension modules are written in C++/CUDA. No plain C code are found.
+
+## Today's PyTorch build system
+
+You can still find the `Extension` in `setup.py` [here](https://github.com/pytorch/pytorch/blob/v2.6.0/setup.py#L1025).
+The `*.cwrap` files got removed completely by [the rewrite of ATen code generator](https://github.com/pytorch/pytorch/pull/42629),
+which later became the [torchgen](https://github.com/pytorch/pytorch/tree/v2.6.0/torchgen) today.
+
+The authors suggested to not worry too much about how Python code interfaces with C++ as long as you know how to find the code.
+The build system of this interface became more and more complex as PyTorch developed.
+
