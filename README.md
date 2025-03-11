@@ -16,10 +16,13 @@ distribution strategy, hardware abstraction, tracing, compiler, and so on.  One
 could easily get lost when try to read those. However, our focus is the very
 core features of PyTorch, which is CPU/GPU ops with autodiffs in eager mode.
 
-The v0.1.1 version is rather small and managable.  In addition, the key ideas
-of these features did not change much in all the following versions. These
-implementations can be traced through the commit history into the large PyTorch
-codebase today.
+The v0.1.1 version is rather small and managable. It only contains the CPU/GPU
+ops, autodiff in eager mode.
+
+In addition, the key ideas of these features did not change much in all the
+following versions. These implementations can be traced through the commit
+history into the large PyTorch codebase today. I will refer to the latest
+implementation as we explore the source code.
 
 ## Build and install
 
