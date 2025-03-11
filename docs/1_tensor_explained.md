@@ -10,9 +10,55 @@ Here are the core classes:
 
 What matters is the C implementations.
 
-## About the `real` type
-We saw a lot of `real` types in the code, but they are just `float`.
-You can find `#define real float` in `torch/lib/TH/THGenerateFloatTypes.h`. 
+## The Tensor class
+
+Here are the actual code of the core classes with my comments.
+
+```C
+typedef struct THTensor
+{
+    long *size; // A list of integers. The shape of the tensor.
+
+    // A list of integers.
+    // The increments needed on each dimension to get the next element.
+    // Similar to the `step` argument of `range()` in Python.
+    // Mainly used to provide a different view of the same storage.
+    long *stride; 
+
+    int nDimension; // Length of the shape list.
+
+    THStorage *storage; // Pointer to the storage object.
+    long storageOffset; // Also used to skip elements and provide new views.
+    int refcount;
+
+    char flag;
+
+} THTensor;
+```
+
+As you can see, there is no actual float type data in the class except for the pointer to the storage.
+The attributes like `stride` and `storageOffset` are just to skip elements on the same tensor storage to create new views of the same tensor.
+
+## The Storage class
+
+```C
+typedef struct THStorage
+{
+    // We saw a lot of real types in the code.
+    // Actually, they are just float.
+    // You can find "#define real float" in torch/lib/TH/THGenerateFloatTypes.h. 
+    real *data; // The actual float data.
+    long size; // The total number of elements.
+    int refcount;
+    char flag;
+    THAllocator *allocator; // Custom memory allocators for CPU/GPU.
+    void *allocatorContext; // The extra context to store with the allocator.
+    struct THStorage *view;
+} THStorage;
+```
+
+As we can see, it contains the pointer to the actual data and a memory allocator to make memory for the data on CPU/GPU.
+
 
 ## The Tensor class today
 The Tensor-Storage structure is preserved to the latest PyTorch today.
