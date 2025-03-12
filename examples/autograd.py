@@ -5,7 +5,7 @@ a = torch.randn(2, 1)
 a = Variable(a)
 b = torch.randn(2, 1)
 b = Variable(b)
-c = a.mul(b)
+c = a.add(b)
 
 print(a)
 print(b)
