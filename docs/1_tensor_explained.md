@@ -8,7 +8,10 @@ Here are the core classes:
 * The C++ wrappers: [`torch/csrc/generic/Tensor.h`](https://github.com/haifeng-jin/pytorch-source/blob/master/torch/csrc/generic/Tensor.h), [`torch/csrc/generic/Storage.h`](https://github.com/haifeng-jin/pytorch-source/blob/master/torch/csrc/generic/Storage.h)
 * The actual C implementation: [`torch/lib/TH/generic/THTensor.h`](https://github.com/haifeng-jin/pytorch-source/blob/master/torch/lib/TH/generic/THTensor.h), [`torch/lib/TH/generic/THStorage.h`](https://github.com/haifeng-jin/pytorch-source/blob/master/torch/lib/TH/generic/THStorage.h).
 
-What matters is the C implementations.
+As you can see, a lot of them are under the `generic` directory, which means the implementations are type-agnostic.
+They can be applied to integers as well as floats.
+
+The Python and C++ wrappers are just wrappers. What matters is the C implementations.
 
 ## The Tensor class
 
@@ -59,6 +62,12 @@ typedef struct THStorage
 
 As we can see, it contains the pointer to the actual data and a memory allocator to make memory for the data on CPU/GPU.
 
+## CUDA Tensors
+
+The above implementations are all for CPUs.
+The CUDA implementation are in the `torch/lib/THC` directory.
+However, the code looks very similar.
+PyTorch will route through different paths as it chooses between CPU and GPU.
 
 ## The Tensor class today
 The Tensor-Storage structure is preserved to the latest PyTorch today.
