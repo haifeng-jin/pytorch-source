@@ -16,7 +16,7 @@ The `add` method is defined in the `torch._C.DoubleTensorBase`.
 As we know, `torch._C` is a C++ extension.
 It is defined in `TensorMethods.cpp`, which is auto generated using template `TensorMethods.cwrap`.
 
-In the
+In the C++ wrapper, you will see the following.
 
 ```cpp
       THPTensor* result = _result_guard.get();
@@ -26,7 +26,11 @@ In the
       return (PyObject*)(result);
 ```
 
-If you track it down, you will find the actual definition of the `add` function is in [`THTensorMath.h`](https://github.com/haifeng-jin/pytorch-source/blob/master/torch/lib/TH/generic/THTensorMath.h).
+It just calls the `add` function of `THTensor`.
+
+## CPU implementation
+
+If you track it down, you will find the actual definition of the `add` function for CPU is in [`THTensorMath.h`](https://github.com/haifeng-jin/pytorch-source/blob/master/torch/lib/TH/generic/THTensorMath.h).
 
 
 ## GPU implementation
@@ -74,3 +78,9 @@ All these kernels, and ops `add`, `sub`, etc., are all type-agnostic.
 You can find them under the `generic` directory under each C/C++/CUDA project.
 
 ## The Tensor ops today
+
+For the PyTorch today, all the ops and tensor definitions are organized in the ATen library, which is a sub-directory in the PyTorch repo.
+There is a detailed description of how the ops are created [here](https://github.com/pytorch/pytorch/blob/v2.6.0/aten/src/ATen/native/README.md).
+For example, the `matmul` is registered in [`native_functions.yaml`](https://github.com/pytorch/pytorch/blob/v2.6.0/aten/src/ATen/native/native_functions.yaml#L3775),
+and implemented [here](https://github.com/pytorch/pytorch/blob/v2.6.0/aten/src/ATen/native/LinearAlgebra.cpp#L2180).
+The `torchgen` will automatically pick it up and compile it to different instruction sets.
