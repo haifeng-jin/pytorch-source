@@ -3,11 +3,7 @@
 This repo is a fork of the PyTorch v0.1.1 release.
 We try to read the code and understand the basics of PyTorch internal mechanisms.
 
-Here are the this this repo added
-* Build and install instructions.
-* Explanation of the source code. (under `docs/`).
-* Changed the `.travis.yml` CI into the GitHub Actions.
-* Some code examples under `examples/`.
+Please refer to the [docs](https://github.com/haifeng-jin/pytorch-source/tree/master/docs) for how to navigate the codebase.
 
 ## Why use v0.1.1?
 
@@ -24,9 +20,6 @@ following versions. These implementations can be traced through the commit
 history into the large PyTorch codebase today. I will refer to the latest
 implementation as we explore the source code.
 
-## Read the source code
-
-Please refer to the [docs](https://github.com/haifeng-jin/pytorch-source/tree/master/docs) for how to navigate the codebase.
 
 ## Build and install
 
@@ -52,3 +45,11 @@ Build and install torch in develop mode:
 python setup.py build
 pip install -e .
 ```
+
+## This repo
+
+Here are the things this repo added
+* Build and install instructions.
+* Explanation of the source code. (under `docs/`).
+* Changed the `.travis.yml` CI into the GitHub Actions.
+* Some code examples under `examples/`.
