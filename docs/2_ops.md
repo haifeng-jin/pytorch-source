@@ -1,4 +1,4 @@
-# Ops explained
+# Ops
 
 Let's take a look at this code example.
 
@@ -84,3 +84,6 @@ There is a detailed description of how the ops are created [here](https://github
 For example, the `matmul` is registered in [`native_functions.yaml`](https://github.com/pytorch/pytorch/blob/v2.6.0/aten/src/ATen/native/native_functions.yaml#L3775),
 and implemented [here](https://github.com/pytorch/pytorch/blob/v2.6.0/aten/src/ATen/native/LinearAlgebra.cpp#L2180).
 The `torchgen` will automatically pick it up and compile it to different instruction sets.
+
+There could be multiple implementations of the same ops, but for different accelertors and different data types.
+[This blog post](http://blog.ezyang.com/2020/09/lets-talk-about-the-pytorch-dispatcher/) explained everything in detail.

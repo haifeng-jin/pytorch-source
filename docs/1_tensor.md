@@ -1,4 +1,4 @@
-# Tensor Explained
+# Tensor
 
 Tensor is just a view of the storage.
 The storage manages the actual memory allocation of the tensor.
