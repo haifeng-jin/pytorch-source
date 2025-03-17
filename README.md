@@ -24,6 +24,10 @@ following versions. These implementations can be traced through the commit
 history into the large PyTorch codebase today. I will refer to the latest
 implementation as we explore the source code.
 
+## Read the source code
+
+Please refer to the [docs](https://github.com/haifeng-jin/pytorch-source/tree/master/docs) for how to navigate the codebase.
+
 ## Build and install
 
 Create the conda environment:
